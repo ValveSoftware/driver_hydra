@@ -1,18 +1,18 @@
 //{{NO_DEPENDENCIES}}
 // Microsoft Visual C++ generated include file.
-// Used by hydra_monitor.rc
+// Used by leap_monitor.rc
 //
 
 #define IDS_APP_TITLE			103
 
 #define IDR_MAINFRAME			128
-#define IDD_HYDRA_MONITOR_DIALOG	102
+#define IDD_LEAP_MONITOR_DIALOG	102
 #define IDD_ABOUTBOX			103
 #define IDM_ABOUT				104
 #define IDM_EXIT				105
-#define IDI_HYDRA_MONITOR			107
+#define IDI_LEAP_MONITOR			107
 #define IDI_SMALL				108
-#define IDC_HYDRA_MONITOR			109
+#define IDC_LEAP_MONITOR			109
 #define IDC_MYICON				2
 #ifndef IDC_STATIC
 #define IDC_STATIC				-1
