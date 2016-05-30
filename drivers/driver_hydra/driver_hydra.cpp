@@ -143,16 +143,8 @@ uint32_t CServerDriver_Hydra::GetTrackedDeviceCount()
 	return m_vecControllers.size();
 }
 
-vr::ITrackedDeviceServerDriver * CServerDriver_Hydra::GetTrackedDeviceDriver( uint32_t unWhich, const char *pchInterfaceVersion )
+vr::ITrackedDeviceServerDriver * CServerDriver_Hydra::GetTrackedDeviceDriver( uint32_t unWhich )
 {
-	// don't return anything if that's not the interface version we have
-	if ( 0 != stricmp( pchInterfaceVersion, vr::ITrackedDeviceServerDriver_Version ) )
-	{
-		DriverLog( "FindTrackedDeviceDriver for version %s, which we don't support.\n",
-			pchInterfaceVersion );
-		return NULL;
-	}
-
 	scope_lock lock( m_Mutex );
 
 	if ( unWhich < m_vecControllers.size() )
@@ -161,16 +153,8 @@ vr::ITrackedDeviceServerDriver * CServerDriver_Hydra::GetTrackedDeviceDriver( ui
 	return nullptr;
 }
 
-vr::ITrackedDeviceServerDriver * CServerDriver_Hydra::FindTrackedDeviceDriver( const char * pchId, const char *pchInterfaceVersion )
+vr::ITrackedDeviceServerDriver * CServerDriver_Hydra::FindTrackedDeviceDriver( const char * pchId )
 {
-	// don't return anything if that's not the interface version we have
-	if ( 0 != stricmp( pchInterfaceVersion, vr::ITrackedDeviceServerDriver_Version ) )
-	{
-		DriverLog( "FindTrackedDeviceDriver for version %s, which we don't support.\n",
-			pchInterfaceVersion );
-		return NULL;
-	}
-
 	scope_lock lock( m_Mutex );
 
 	for ( auto it = m_vecControllers.begin(); it != m_vecControllers.end(); ++it )
@@ -298,7 +282,7 @@ void CServerDriver_Hydra::ScanForNewControllers( bool bNotifyServer )
 					char buf[256];
 					GenerateSerialNumber( buf, sizeof( buf ), base, i );
 					scope_lock lock( m_Mutex );
-					if ( !FindTrackedDeviceDriver( buf, vr::ITrackedDeviceServerDriver_Version ) )
+					if ( !FindTrackedDeviceDriver( buf ) )
 					{
 						DriverLog( "added new device %s\n", buf );
 						m_vecControllers.push_back( new CHydraHmdLatest( m_pDriverHost, base, i ) );
